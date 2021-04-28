@@ -17,7 +17,11 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
  */
 public class MpGenerator {
 
-	final static String dirPath = "D://";
+	private final static String dirPath;
+
+	static {
+		dirPath = "D://";
+	}
 
 	/**
 	 * <p>
@@ -66,9 +70,11 @@ public class MpGenerator {
 				.setCapitalMode(true)// 全局大写命名 ORACLE 注意
 				.setTablePrefix("t_")// 此处可以修改为您的表前缀
 				.setNaming(NamingStrategy.underline_to_camel)// 表名生成策略
-				.setInclude("t_user", "t_user_role", "t_role", "t_role_permission", "t_permission",
+				/*.setInclude("t_user", "t_user_role", "t_role", "t_role_permission", "t_permission",
 						"t_questionnaire", "t_question", "t_option",
 						"t_user_questionnaire", "t_user_choice", "t_user_answer"); // 需要生成的表
+			*/
+				.setInclude("t_role", "t_permission"); // 需要生成的表
 
 		mpg.setStrategy(strategy);
 

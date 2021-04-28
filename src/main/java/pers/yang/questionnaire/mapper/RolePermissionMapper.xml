@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.yang.questionnaire.mapper.RolePermissionMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="pers.yang.questionnaire.entity.RolePermission">
+		<id column="id" property="id"/>
+		<result column="role_id" property="roleId"/>
+		<result column="permission_id" property="permissionId"/>
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+        id, role_id, permission_id
+    </sql>
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="DetailResultMap" type="pers.yang.questionnaire.vo.RolePermissionVO">
+		<id column="id" property="id"/>
+		<result column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+		<result column="role_remark" property="roleRemark"/>
+		<result column="permission_id" property="permissionId"/>
+		<result column="permission_name" property="permissionName"/>
+		<result column="permission_remark" property="permissionRemark"/>
+	</resultMap>
+
+
+	<select id="selectDtlById" resultType="pers.yang.questionnaire.vo.RolePermissionVO">
+		select rp.id,rp.role_id,r.name role_name,r.remark role_remark,permission_id,p.name permission_name,p.remark permission_remark
+		from t_role_permission rp
+		left join t_role r on rp.role_id = r.id
+		left join t_permission p on rp.permission_id = p.id
+		where rp.id = #{id}
+	</select>
+
+	<select id="selectDtlAll" resultType="pers.yang.questionnaire.vo.RolePermissionVO">
+		select rp.id,rp.role_id,r.name role_name,r.remark role_remark,permission_id,p.name permission_name,p.remark permission_remark
+		from t_role_permission rp
+		left join t_role r on rp.role_id = r.id
+		left join t_permission p on rp.permission_id = p.id
+	</select>
+
+</mapper>
