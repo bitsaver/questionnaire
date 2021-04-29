@@ -12,6 +12,7 @@ import pers.yang.questionnaire.mapper.UserMapper;
 import pers.yang.questionnaire.service.LoginService;
 
 import org.springframework.stereotype.Service;
+
 @Log
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -39,5 +40,9 @@ public class LoginServiceImpl implements LoginService {
 		SecurityUtils.getSubject().login(token);
 	}
 
+	@Override
+	public List<String> getRolesByUserId(Integer id) {
+		return userMapper.getRolesByUserId(id);
+	}
 
 }

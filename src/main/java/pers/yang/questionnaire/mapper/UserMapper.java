@@ -17,6 +17,9 @@ public interface UserMapper extends BaseMapper<User> {
 
 	List<String> getPermissionsByUserId(Integer id);
 
+	List<String> getRolesByUserId(Integer id);
+
 	User getUserByName(String name);
 
+	User getByEmail(String email);
 }

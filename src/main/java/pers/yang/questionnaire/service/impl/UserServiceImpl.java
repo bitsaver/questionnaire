@@ -14,6 +14,7 @@ import pers.yang.questionnaire.entity.User;
 import pers.yang.questionnaire.mapper.UserMapper;
 import pers.yang.questionnaire.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import pers.yang.questionnaire.utils.UserUtil;
 
 import org.springframework.stereotype.Service;
 
@@ -76,15 +77,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	}
 
 	/**
-	 * 编辑一个账号，赋予该账号基础角色的权限
+	 * 编辑一个账号，
 	 * @param user 用户信息，包括用户名、密码和邮箱
 	 * @return 是否成功
 	 */
 	@Override
 	public Boolean editOne(User user) {
 		encryptUser(user);
-		user.setId(((User)SecurityUtils.getSubject().getPrincipal()).getId());
 		return user.updateById();
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return userMapper.getByEmail(email);
 	}
 
 }

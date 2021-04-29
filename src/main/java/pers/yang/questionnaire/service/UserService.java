@@ -17,5 +17,8 @@ public interface UserService extends IService<User> {
 
 	Boolean addOne(User user);
 
+
 	Boolean editOne(User user);
+
+	User getUserByEmail(String email);
 }

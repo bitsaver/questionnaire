@@ -19,6 +19,7 @@ import pers.yang.questionnaire.exception.CustomException;
 import pers.yang.questionnaire.exception.ErrorType;
 import pers.yang.questionnaire.service.LoginService;
 import pers.yang.questionnaire.service.UserService;
+import pers.yang.questionnaire.utils.UserUtil;
 
 import org.springframework.stereotype.Component;
 @Log
@@ -41,10 +42,13 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) throws RuntimeException{
         log.info("doGetAuthorizationInfo() ===> principals.getPrimaryPrincipal():" + principals.getPrimaryPrincipal());
-        User user = (User) principals.getPrimaryPrincipal();
-        List<String> permissions = loginService.getPermissionsByUserId(user.getId());
+        Integer userId = UserUtil.getUserId();
+        List<String> permissions = loginService.getPermissionsByUserId(userId);
+        List<String> roles = loginService.getRolesByUserId(userId);
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        simpleAuthorizationInfo.addRoles(roles);
         simpleAuthorizationInfo.addStringPermissions(permissions);
+        log.info("授予角色:" + roles.toString());
         log.info("授予权限:" + permissions.toString());
         return simpleAuthorizationInfo;
     }
@@ -60,7 +64,7 @@ public class MyRealm extends AuthorizingRealm {
         User user = userService.getUserByName((String) authenticationToken.getPrincipal());
 
         if(user == null)
-            throw new CustomException(ErrorType.INCORRECT_ID);
+            throw new CustomException(ErrorType.USER_NAME_INCORRECT);
 
         return new SimpleAuthenticationInfo(
                 user,

@@ -42,6 +42,7 @@ public class UserController {
 	@RequiresPermissions("user:addOne")
 	public Response addOne(@RequestBody User user) {
 		userService.addOne(user);
+		userService.addOne(user);
 		return ResponseUtil.ok(user);
 	}
 

@@ -9,4 +9,6 @@ public interface LoginService {
 	List<String> getPermissionsByUserId(Integer id);
 
 	void login(User user);
+
+	List<String> getRolesByUserId(Integer id);
 }
